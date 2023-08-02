@@ -19,8 +19,7 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        docker.build('catalincatana/crwd-app:latest')
-                        docker.tag('catalincatana/crwd-app:latest', 'catalincatana/crwd-repository:latest')
+                        docker.build('catalincatana/crwd-repository:latest')
                     }
                 }
             }
