@@ -57,7 +57,7 @@ pipelineJob('DeployCrwdApp') {
 
     parameters {
         stringParam('Version', '', 'App version - latest - if not specified')
-        choiceParam('Env, '['All', 'Stage', 'Prod'], 'Where do we deploy?')
+        choiceParam('Env', "['All', 'Stage', 'Prod']", 'Where do we deploy?')
     }
 
     definition {
