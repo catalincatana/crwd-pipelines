@@ -33,7 +33,7 @@ pipeline {
                 container('kubectl') {
                     script {
                         sh """
-                     wget crwd-app-service.crwd.svc.cluster.local:5000
+                     wget crwd-app-service:5000
                      cat index.html
                     """
                     }
