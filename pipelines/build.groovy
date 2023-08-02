@@ -18,8 +18,10 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                script {
-                    docker.build('catalincatana/crwd-app:latest')
+                container('docker') {
+                    script {
+                        docker.build('catalincatana/crwd-app:latest')
+                    }
                 }
             }
         }
