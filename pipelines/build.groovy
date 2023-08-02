@@ -12,18 +12,14 @@ podTemplate(containers: [
         stage('Get a Python Project') {
             container('docker') {
                 stage('Checkout') {
-                    steps {
-                        git branch: 'main',
-                                credentialsId: 'GITHUB_SSH_KEY',
-                                url: 'git@github.com:catalincatana/crwd-app.git'
+                    git branch: 'main',
+                            credentialsId: 'GITHUB_SSH_KEY',
+                            url: 'git@github.com:catalincatana/crwd-app.git'
 
-                    }
                 }
                 stage('Docker Build') {
-                    steps {
-                        script {
-                            docker.build('catalincatana/crwd-app:latest')
-                        }
+                    script {
+                        docker.build('catalincatana/crwd-app:latest')
                     }
                 }
             }
