@@ -6,10 +6,8 @@ pipeline {
         stage('Checkout') {
             agent any
             steps {
-                checkout scm: scmGit(userRemoteConfigs: [
-                        [ credentialsId: 'GITHUB_SSH_KEY',
-                          url: 'git@github.com:catalincatana/crwd-app.git' ]
-                ])
+                git url: 'git@github.com:catalincatana/crwd-app.git', branch: 'main',
+                        credentialsId: 'GITHUB_SSH_KEY'
             }
         }
         stage('Docker Build') {
