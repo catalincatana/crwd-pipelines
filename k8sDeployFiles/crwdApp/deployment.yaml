@@ -18,6 +18,7 @@ spec:
       containers:
       - name: py-app #The name of the py app application container
         image: catalincatana/crwd-repository:latest #The Docker image for building the py application container
+        imagePullPolicy: Always
         ports:
         - containerPort: 5001 #The port for the py application   container
 
