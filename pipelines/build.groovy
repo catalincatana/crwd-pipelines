@@ -19,7 +19,7 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        sh 'echo ${params.TAG}'
+                        sh "echo ${params.TAG}"
                         docker.build('catalincatana/crwd-repository:${params.TAG}')
                     }
                 }
