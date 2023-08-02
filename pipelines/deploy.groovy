@@ -6,7 +6,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    kubernetesDeploy(configs:"k8sDeployFiles/crwdApp/deployment.yaml", "k8sDeployFiles/crwdApp/service.yaml")
+                    sh '''
+            echo "Deploying to ${params.Env}"
+            ls -la
+            '''
                 }
             }
         }
