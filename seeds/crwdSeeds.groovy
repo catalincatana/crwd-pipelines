@@ -26,3 +26,26 @@ pipelineJob('BuildCrwdApp') {
         }
     }
 }
+
+pipelineJob('StartCrwdAppPipeline') {
+    displayName('Starts the Crwd App Pipeline CI/CD Flow')
+
+    triggers {
+        githubPush()
+    }
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url 'git@github.com:catalincatana/crwd-app.git'
+                        credentials('GITHUB_SSH_KEY')
+                    }
+                    branch('main')
+                }
+            }
+            scriptPath('jenkins/startPipeline.groovy')
+        }
+    }
+}
