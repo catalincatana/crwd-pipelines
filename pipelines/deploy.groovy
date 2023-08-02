@@ -15,6 +15,8 @@ pipeline {
                         sh '''
             echo "Deploying to ..."
             ls -la
+            kubectl version
+            kubectl get po -n devops-tools
             '''
                     }
                 }
