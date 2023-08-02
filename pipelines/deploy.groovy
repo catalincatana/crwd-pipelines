@@ -9,6 +9,11 @@ pipeline {
     }
     stages {
         stage('Deploy Stage') {
+            when {
+                expression {
+                    return params.Env != 'Prod';
+                }
+            }
             steps {
                 // Mount the Kubernetes configuration file from credentials
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
@@ -29,6 +34,11 @@ pipeline {
             }
         }
         stage('Run integration tests') {
+            when {
+                expression {
+                    return params.Env == 'All';
+                }
+            }
             steps {
                 container('kubectl') {
                     script {
@@ -48,7 +58,13 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy Prod') {
+            when {
+                expression {
+                    return params.Env != 'Stage';
+                }
+            }
             steps {
                 // Mount the Kubernetes configuration file from credentials
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
