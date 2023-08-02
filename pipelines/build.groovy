@@ -19,7 +19,7 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        docker.build('catalincatana/crwd-repository:$(git rev-parse --short HEAD)')
+                        docker.build('catalincatana/crwd-repository:$params.TAG')
                     }
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
                 container('docker') {
                     withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDS', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                         sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                        sh 'docker push catalincatana/crwd-repository:$(git rev-parse --short HEAD)'
+                        sh 'docker push catalincatana/crwd-repository:$params.TAG'
                     }
                 }
             }
