@@ -35,4 +35,4 @@ spec:
   - protocol: TCP
     port: 5000 #Service port
     targetPort: 5000 #The port for the Py application container
-    nodePort: 33000
+    nodePort: 30111
