@@ -37,7 +37,7 @@ pipeline {
                             output=\$(cat index.html)  
                             expected="Glad to see you again"
         
-                            if [ "$output" = "$expected" ]; then
+                            if [ "\$output" = "\$expected" ]; then
                                 echo "Output matches the expected string."
                             else
                                 echo "Output does not match the expected string."
