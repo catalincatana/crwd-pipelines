@@ -8,23 +8,33 @@ pipeline {
         }
     }
     stages {
-        stage('Deploy') {
+//        stage('Deploy') {
+//            steps {
+//                // Mount the Kubernetes configuration file from credentials
+//                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+//                    container('kubectl') {
+//                        // Use the mounted kubeconfig file in the kubectl commands
+//                        script {
+//                                sh """
+//                            echo "Deploying to ..."
+//                            ls -la
+//                            kubectl version
+//                            kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
+//                            kubectl apply -f k8sDeployFiles/crwdApp/deployment.yaml --kubeconfig=${KUBECONFIG}
+//                            kubectl set image deployments/crwd-app-deployment py-app=catalincatana/crwd-repository:${params.Version} -n crwd --kubeconfig=${KUBECONFIG}
+//                        """
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        stage('Run integration tests') {
             steps {
-                // Mount the Kubernetes configuration file from credentials
-                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                    container('kubectl') {
-                        // Use the mounted kubeconfig file in the kubectl commands
-                        script {
-                                sh """
-                            echo "Deploying to ..."
-                            ls -la
-                            kubectl version
-                            kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
-                            kubectl apply -f k8sDeployFiles/crwdApp/deployment.yaml --kubeconfig=${KUBECONFIG}
-                            kubectl set image deployments/crwd-app-deployment py-app=catalincatana/crwd-repository:${params.Version} -n crwd --kubeconfig=${KUBECONFIG}
-                        """
-                        }
-                    }
+                script {
+                    sh """
+                     wget crwd-app-service.crwd.svc.cluster.local:5000
+                     cat index.html
+                    """
                 }
             }
         }
