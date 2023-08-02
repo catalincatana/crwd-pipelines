@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh 'docker build -t catalincatana/crwd-app:latest .'
+                docker.build('catalincatana/crwd-app:latest')
             }
         }
 //        stage('Docker Push') {
