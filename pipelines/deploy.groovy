@@ -18,6 +18,7 @@ pipeline {
                                 sh '''
                             echo "Deploying to ..."
                             ls -la
+                            cat k8sDeployFiles/deployment.yaml
                             kubectl version
                             kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
                             kubectl apply -f k8sDeployFiles/deployment.yaml --kubeconfig=${KUBECONFIG}
