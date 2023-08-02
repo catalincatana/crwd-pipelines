@@ -13,7 +13,7 @@ pipeline {
         stage('Docker Build') {
             agent any
             steps {
-                sh 'ls -la'
+                sh 'ls -la ../'
                 sh 'cd crwd-app'
                 sh 'docker build -t catalincatana/crwd-app:latest .'
             }
