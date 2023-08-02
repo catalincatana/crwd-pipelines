@@ -6,7 +6,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    kubernetesDeploy(configs:"deployment.yaml", "service.yaml", namespace: "crwd")
+                    kubernetesDeploy(configs:"k8sDeployFiles/crwdApp/deployment.yaml", "k8sDeployFiles/crwdApp/service.yaml")
                 }
             }
         }
