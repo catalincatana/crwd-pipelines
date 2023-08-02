@@ -9,6 +9,7 @@ pipeline {
                     sh '''
             echo "Deploying to ..."
             ls -la
+            kubectl version
             '''
                 }
             }
