@@ -1,32 +1,58 @@
 #!groovy
 
-podTemplate(containers: [
-        containerTemplate(
-                name: 'docker',
-                image: 'docker:latest',
-                command: 'sleep',
-                args: '30d')
-]) {
+pipeline {
+    agent {
+        kubernetes {
+            defaultContainer 'jnlp'
+            yamlFile 'podTemplates/agentpod.yaml'
+        }
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                        credentialsId: 'GITHUB_SSH_KEY',
+                        url: 'git@github.com:catalincatana/crwd-app.git'
 
-    node(POD_LABEL) {
-        stage('Get a Python Project') {
-            container('docker') {
-                stage('Checkout') {
-                    git branch: 'main',
-                            credentialsId: 'GITHUB_SSH_KEY',
-                            url: 'git@github.com:catalincatana/crwd-app.git'
-
-                }
-                stage('Docker Build') {
-                    script {
-                        docker.build('catalincatana/crwd-app:latest')
-                    }
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                script {
+                    docker.build('catalincatana/crwd-app:latest')
                 }
             }
         }
-
     }
 }
+
+//podTemplate(containers: [
+//        containerTemplate(
+//                name: 'docker',
+//                image: 'docker:latest',
+//                command: 'sleep',
+//                args: '30d')
+//]) {
+//
+//    node(POD_LABEL) {
+//        stage('Get a Python Project') {
+//            container('docker') {
+//                stage('Checkout') {
+//                    git branch: 'main',
+//                            credentialsId: 'GITHUB_SSH_KEY',
+//                            url: 'git@github.com:catalincatana/crwd-app.git'
+//
+//                }
+//                stage('Docker Build') {
+//                    script {
+//                        docker.build('catalincatana/crwd-app:latest')
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
+//}
 
 
 
