@@ -4,16 +4,17 @@ pipeline {
     agent any
     stages {
         stage('Checkout') {
-            agent any
             steps {
-                git url: 'git@github.com:catalincatana/crwd-app.git', branch: 'main',
-                        credentialsId: 'GITHUB_SSH_KEY'
+                git branch: 'main',
+                        credentialsId: 'GITHUB_SSH_KEY',
+                        url: 'git@github.com:catalincatana/crwd-app.git'
+                sh "ls -lat"
+
             }
         }
         stage('Docker Build') {
-            agent any
             steps {
-                sh 'ls -la ../'
+                sh 'ls -la'
                 sh 'cd crwd-app'
                 sh 'docker build -t catalincatana/crwd-app:latest .'
             }
