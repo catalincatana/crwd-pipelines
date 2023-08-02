@@ -30,11 +30,13 @@ pipeline {
 //        }
         stage('Run integration tests') {
             steps {
-                script {
-                    sh """
+                container('kubectl') {
+                    script {
+                        sh """
                      wget crwd-app-service.crwd.svc.cluster.local:5000
                      cat index.html
                     """
+                    }
                 }
             }
         }
