@@ -4,6 +4,31 @@ job('demo') {
     }
 }
 
+/* Job that is automatically triggered by git push to main branch*/
+pipelineJob('StartCrwdAppPipeline') {
+    displayName('Starts the Crwd App Pipeline CI/CD Flow')
+
+    triggers {
+        githubPush()
+    }
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url 'git@github.com:catalincatana/crwd-app.git'
+                        credentials('GITHUB_SSH_KEY')
+                    }
+                    branch('main')
+                }
+            }
+            scriptPath('jenkins/startPipeline.groovy')
+        }
+    }
+}
+
+/* CI/CD pipelines */
 pipelineJob('BuildCrwdApp') {
     displayName('Build Crwd App')
 
@@ -27,11 +52,12 @@ pipelineJob('BuildCrwdApp') {
     }
 }
 
-pipelineJob('StartCrwdAppPipeline') {
-    displayName('Starts the Crwd App Pipeline CI/CD Flow')
+pipelineJob('DeployCrwdApp') {
+    displayName('Deploy Crwd App to Stage and Prod')
 
-    triggers {
-        githubPush()
+    parameters {
+        stringParam('Version', '', 'App version - latest - if not specified')
+        choiceParam('Env, '['All', 'Stage', 'Prod'], 'Where do we deploy?')
     }
 
     definition {
@@ -39,13 +65,13 @@ pipelineJob('StartCrwdAppPipeline') {
             scm {
                 git {
                     remote {
-                        url 'git@github.com:catalincatana/crwd-app.git'
+                        url 'git@github.com:catalincatana/crwd-pipelines.git'
                         credentials('GITHUB_SSH_KEY')
                     }
                     branch('main')
                 }
             }
-            scriptPath('jenkins/startPipeline.groovy')
+            scriptPath('pipelines/deploy.groovy')
         }
     }
 }
