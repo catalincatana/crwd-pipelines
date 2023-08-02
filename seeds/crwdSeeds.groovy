@@ -16,7 +16,7 @@ pipelineJob('BuildCrwdApp') {
             scm {
                 git {
                     remote {
-                        url ' git@github.com:catalincatana/crwd-pipelines.git'
+                        url 'git@github.com:catalincatana/crwd-pipelines.git'
                         credentials('GITHUB_SSH_KEY')
                     }
                     branch('main')
