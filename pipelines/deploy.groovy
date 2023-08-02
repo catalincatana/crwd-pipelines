@@ -35,12 +35,13 @@ pipeline {
                         sh """
                             wget crwd-app-service.crwd.svc.cluster.local:5001
                             output=\$(cat index.html)  
-                            expected="Glad to see you again"
+                            expected="Glad to see you againn"
         
                             if [ "\$output" = "\$expected" ]; then
                                 echo "Output matches the expected string."
                             else
                                 echo "Output does not match the expected string."
+                                exit 1  
                             fi
                         """
                     }
