@@ -11,13 +11,17 @@ pipeline {
         stage('Deploy') {
             steps {
                 container('kubectl') {
-                    script {
-                        sh '''
-            echo "Deploying to ..."
-            ls -la
-            kubectl version
-            kubectl get po -n devops-tools
-            '''
+                    // Mount the Kubernetes configuration file from credentials
+                    withCredentials([file(credentialsId: env.kubeconfig, variable: 'KUBECONFIG')]) {
+                        // Use the mounted kubeconfig file in the kubectl commands
+                        script {
+                                sh '''
+                            echo "Deploying to ..."
+                            ls -la
+                            kubectl version
+                            kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
+                        '''
+                        }
                     }
                 }
             }
