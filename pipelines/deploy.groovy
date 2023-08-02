@@ -21,7 +21,7 @@ pipeline {
                             kubectl version
                             kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
                             kubectl apply -f k8sDeployFiles/crwdApp/deployment.yaml --kubeconfig=${KUBECONFIG}
-                            kubectl set image catalincatana/crwd-repository catalincatana/crwd-repository:latest:${params.VERSION} --kubeconfig=${KUBECONFIG}
+                            kubectl set image catalincatana/crwd-repository catalincatana/crwd-repository:${params.Version} --kubeconfig=${KUBECONFIG}
                         '''
                         }
                     }
