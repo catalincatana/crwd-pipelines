@@ -8,26 +8,26 @@ pipeline {
         }
     }
     stages {
-//        stage('Deploy') {
-//            steps {
-//                // Mount the Kubernetes configuration file from credentials
-//                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-//                    container('kubectl') {
-//                        // Use the mounted kubeconfig file in the kubectl commands
-//                        script {
-//                                sh """
-//                            echo "Deploying to ..."
-//                            ls -la
-//                            kubectl version
-//                            kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
-//                            kubectl apply -f k8sDeployFiles/crwdApp/deployment.yaml --kubeconfig=${KUBECONFIG}
-//                            kubectl set image deployments/crwd-app-deployment py-app=catalincatana/crwd-repository:${params.Version} -n crwd --kubeconfig=${KUBECONFIG}
-//                        """
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        stage('Deploy Stage') {
+            steps {
+                // Mount the Kubernetes configuration file from credentials
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    container('kubectl') {
+                        // Use the mounted kubeconfig file in the kubectl commands
+                        script {
+                                sh """
+                            echo "Deploying to Stage..."
+                            ls -la
+                            kubectl version
+                            kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
+                            kubectl apply -f k8sDeployFiles/crwdApp/stagedeployment.yaml --kubeconfig=${KUBECONFIG}
+                            kubectl set image deployments/crwd-app-deployment py-app=catalincatana/crwd-repository:${params.Version} -n crwd --kubeconfig=${KUBECONFIG}
+                        """
+                        }
+                    }
+                }
+            }
+        }
         stage('Run integration tests') {
             steps {
                 container('kubectl') {
@@ -35,7 +35,7 @@ pipeline {
                         sh """
                             wget crwd-app-service.crwd.svc.cluster.local:5001
                             output=\$(cat index.html)  
-                            expected="Glad to see you againn"
+                            expected="Glad to see you again"
         
                             if [ "\$output" = "\$expected" ]; then
                                 echo "Output matches the expected string."
@@ -44,6 +44,26 @@ pipeline {
                                 exit 1  
                             fi
                         """
+                    }
+                }
+            }
+        }
+        stage('Deploy Prod') {
+            steps {
+                // Mount the Kubernetes configuration file from credentials
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    container('kubectl') {
+                        // Use the mounted kubeconfig file in the kubectl commands
+                        script {
+                            sh """
+                            echo "Deploying to Production ..."
+                            ls -la
+                            kubectl version
+                            kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
+                            kubectl apply -f k8sDeployFiles/crwdApp/proddeployment.yaml --kubeconfig=${KUBECONFIG}
+                            kubectl set image deployments/crwd-app-deployment-prod py-app=catalincatana/crwd-repository:${params.Version} -n crwd-prod --kubeconfig=${KUBECONFIG}
+                        """
+                        }
                     }
                 }
             }

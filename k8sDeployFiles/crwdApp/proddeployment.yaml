@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crwd-app-deployment-prod #The name of the Kubernetes Deployment to be created in the Kubernetes cluster
+  namespace: crwd-prod
+  labels:
+    app: py-app
+spec:
+  replicas: 2 #The number of pods to be created in the Kubernetes cluster for the Py application container
+  selector:
+    matchLabels:
+      app: py-app
+  template:
+    metadata:
+      labels:
+        app: py-app
+    spec:
+      containers:
+      - name: py-app #The name of the py app application container
+        image: catalincatana/crwd-repository:latest #The Docker image for building the py application container
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5001 #The port for the py application   container
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crwd-app-service-prod #The name of the Kubernetes Service to be created in the Kubernetes cluster
+  namespace: crwd-prod
+spec:
+  selector:
+    app: py-app
+  type: NodePort #Type of the Kubernetes Service
+  ports:
+  - name: httpport
+    port: 5001 #Service port
+    targetPort: 5001 #The port for the Py application container
+    nodePort: 30222
