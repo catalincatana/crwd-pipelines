@@ -7,7 +7,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-            echo "Deploying to ${params.Env}"
+            echo "Deploying to ..."
             ls -la
             '''
                 }
