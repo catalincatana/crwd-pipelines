@@ -20,6 +20,7 @@ pipeline {
                             ls -la
                             kubectl version
                             kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
+                            kubectl apply -f k8s/deployment.yaml --kubeconfig=${KUBECONFIG}
                         '''
                         }
                     }
