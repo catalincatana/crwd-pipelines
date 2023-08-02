@@ -1,7 +1,7 @@
 #!groovy
 
 pipeline {
-    agent none  stages {
+    stages {
         stage('Checkout') {
             agent any
             steps {
