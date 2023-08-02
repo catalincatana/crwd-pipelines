@@ -15,14 +15,14 @@ pipeline {
                     container('kubectl') {
                         // Use the mounted kubeconfig file in the kubectl commands
                         script {
-                                sh '''
+                                sh """
                             echo "Deploying to ..."
                             ls -la
                             kubectl version
                             kubectl --kubeconfig=${KUBECONFIG} get po -n devops-tools
                             kubectl apply -f k8sDeployFiles/crwdApp/deployment.yaml --kubeconfig=${KUBECONFIG}
-                        '''
-                            sh "kubectl set image deployments/crwd-app-deployment crwd-app-deployment=catalincatana/crwd-repository:${params.Version} --kubeconfig=${KUBECONFIG}"
+                            kubectl set image deployments/crwd-app-deployment crwd-app-deployment=catalincatana/crwd-repository:${params.Version} --kubeconfig=${KUBECONFIG}
+                        """
                         }
                     }
                 }
