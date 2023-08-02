@@ -30,7 +30,7 @@ pipeline {
                 container('docker') {
                     withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDS', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                         sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                        sh 'docker push catalincatana/crwd-app:latest catalincatana/crwd-repository:latest'
+                        sh 'docker push catalincatana/crwd-repository:latest'
                     }
                 }
             }
