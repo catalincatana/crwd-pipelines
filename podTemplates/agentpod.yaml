@@ -6,14 +6,11 @@ metadata:
     some-label: pod
 spec:
   containers:
-    - name: maven
-      image: maven:3.3.9-jdk-8-alpine
-      command:
-        - cat
-      tty: true
-      volumeMounts:
-        - name: m2
-          mountPath: /root/.m2
+    -name : kubectl
+     image: bitnami/kubectl:1.18
+     command:
+       - cat
+     tty: true
     - name: docker
       image: docker:19.03
       command:
@@ -26,6 +23,3 @@ spec:
     - name: dockersock
       hostPath:
         path: /var/run/docker.sock
-    - name: m2
-      hostPath:
-        path: /root/.m2

@@ -1,17 +1,25 @@
 #!groovy
 
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            defaultContainer 'jnlp'
+            yamlFile 'podTemplates/agentpod.yaml'
+        }
+    }
     stages {
         stage('Deploy') {
             steps {
-                script {
-                    sh '''
+                container('kubectl') {
+                    script {
+                        sh '''
             echo "Deploying to ..."
             ls -la
             kubectl version
             '''
+                    }
                 }
+
             }
         }
     }
