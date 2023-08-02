@@ -1,8 +1,6 @@
-job('demo') {
-    steps {
-        shell('echo Hello World!')
-    }
-}
+/*
+    Seed jobs for generating the CI/CD Pipelines for CRWD-APP
+*/
 
 /* Job that is automatically triggered by git push to main branch*/
 pipelineJob('StartCrwdAppPipeline') {
