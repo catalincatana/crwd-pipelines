@@ -30,9 +30,8 @@ metadata:
 spec:
   selector:
     app: py-app
-  type: LoadBalancer #Type of the Kubernetes Service
+  type: NodePort #Type of the Kubernetes Service
   ports:
-  - protocol: TCP
-    port: 5000 #Service port
+  - port: 5000 #Service port
     targetPort: 5000 #The port for the Py application container
     nodePort: 30111
