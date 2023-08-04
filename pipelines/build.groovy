@@ -1,5 +1,6 @@
 #!groovy
 
+/* Pipeline used for crwd-app build */
 pipeline {
     agent {
         kubernetes {

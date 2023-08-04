@@ -1,3 +1,7 @@
+# Pod Template that is run by the Jenkins agent.
+# It has 2 containers,
+# - one used on the build process (docker)
+# - and one used on the deployment process (kubectl)
 apiVersion: v1
 kind: Pod
 metadata:

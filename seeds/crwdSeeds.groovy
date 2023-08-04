@@ -2,7 +2,10 @@
     Seed jobs for generating the CI/CD Pipelines for CRWD-APP
 */
 
-/* Job that is automatically triggered by git push to main branch*/
+/*--------------------*/
+/* Job that is automatically
+triggered by git push to main branch*/
+/*--------------------*/
 pipelineJob('StartCrwdAppPipeline') {
     displayName('Starts the Crwd App Pipeline CI/CD Flow')
 
@@ -30,7 +33,9 @@ pipelineJob('StartCrwdAppPipeline') {
     }
 }
 
+/*--------------------*/
 /* CI/CD pipelines */
+/*--------------------*/
 pipelineJob('BuildCrwdApp') {
     displayName('Build Crwd App')
 
