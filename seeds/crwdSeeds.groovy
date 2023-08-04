@@ -7,7 +7,7 @@ pipelineJob('StartCrwdAppPipeline') {
     displayName('Starts the Crwd App Pipeline CI/CD Flow')
 
     properties {
-        githubProjectUrl('git@github.com:catalincatana/crwd-app.git')
+        githubProjectUrl('https://github.com/catalincatana/crwd-app')
     }
 
     triggers {
